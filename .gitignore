@@ -1,0 +1,32 @@
+.*.lcts
+*.log
+*.py[cod]
+*.db
+*.DS_Store
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+var
+sdist
+develop-eggs
+.installed.cfg
+__pycache__
+
+# Unit test / coverage reports
+.coverage
+.tox
+
+docs/_build/*
+.vscode/
+.idea/
+coverage/
+.pytest_cache/
+migrations/versions/
