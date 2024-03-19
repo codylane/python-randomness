@@ -7,7 +7,7 @@ generate random number generators for games or for science.
 
 # Bootstraping the project
 
-- Install GNU Make []()
+- Install GNU Make [GNU Make Download](https://www.gnu.org/software/make/#download)
 
 - Then run `make` on the command line to download and install all the
   Pythons listed in the [.init.env](./.init.env) file
