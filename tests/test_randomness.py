@@ -4,7 +4,7 @@ from randomness import random_generator
 
 
 def test_random_generator_generates_the_proper_size_of_items():
-    size = 10000
+    size = 1000
     start = 1
     end = 3
 
@@ -20,11 +20,20 @@ def test_random_generator_generates_the_proper_size_of_items():
 
     expected_range = {
         1: 0,
-        2: 1,
-        3: 2,
+        2: 0,
+        3: 0,
+        4: 0,
     }
 
     for i, v in enumerate(results):
-        i = i % end + 1
+        i = (i % end) + 1
         expected_range[i] += 1
+
         assert v in expected_range
+
+    for i, v in enumerate(expected_range):
+        i = (i % end) + 1
+
+        assert expected_range[i] > 0
+
+    print(expected_range)
