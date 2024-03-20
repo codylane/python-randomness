@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from randomness import random_generator
+from randomness import weighted_random_generator
 
 
 def test_random_generator_generates_the_proper_size_of_items():
@@ -22,7 +23,6 @@ def test_random_generator_generates_the_proper_size_of_items():
         1: 0,
         2: 0,
         3: 0,
-        4: 0,
     }
 
     for i, v in enumerate(results):
@@ -36,4 +36,23 @@ def test_random_generator_generates_the_proper_size_of_items():
 
         assert expected_range[i] > 0
 
-    print(expected_range)
+    total_items = sum([v for v in expected_range.values()])
+
+    assert total_items == size
+
+
+def test_weighted_random_generator():
+    samples = [1, 2, 3]
+    size = 1000
+    start = 1
+    end = 3
+
+    results = weighted_random_generator(
+        samples=samples,
+        size=size,
+        start=start,
+        end=end,
+    )
+
+    print(results)
+    assert False
