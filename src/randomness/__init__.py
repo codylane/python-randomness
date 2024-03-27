@@ -29,7 +29,7 @@ def random_generator(size, start=None, end=None, **kwargs):
     end = end or (size + 1)
 
     for _ in range(0, size):
-        yield int(random.random() * end) + 1
+        yield int(random.random() * end) + 1  # nosec
 
 
 def weighted_random_generator(weights, size, start=None, end=None, **kwargs):  # noqa: E501
@@ -76,28 +76,3 @@ def weighted_random_generator(weights, size, start=None, end=None, **kwargs):  #
                     results.append(rand_num)
 
     return results
-
-
-if __name__ == '__main__':
-    results = weighted_random_generator(
-        weights=[66, 12, 22],
-        size=100,
-        start=1,
-        end=3,
-    )
-
-    assert len(results) == 100
-
-    print(results)
-
-    data = {
-        i: 0
-        for i in INDEX_MAP
-    }
-
-    for result in results:
-        data[result] += 1
-
-    assert sum(data.values()) == 100
-
-    print(data)

@@ -58,3 +58,24 @@ generate random number generators for games or for science.
 
 - **How then do we weight the chances without random 1-100 and then if
     1-65 ....**
+
+
+# Run Tests
+
+```
+tox
+```
+
+## List of tests to run
+
+```
+tox -l
+```
+
+## Run a specific test
+
+This only runs the `bandit` tests
+
+```
+tox -e bandit
+```
