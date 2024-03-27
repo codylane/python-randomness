@@ -33,7 +33,20 @@ def random_generator(size, start=None, end=None, **kwargs):
 
 
 def weighted_random_generator(weights, size, start=None, end=None, **kwargs):  # noqa: E501
-    '''Do it
+    '''Generate an array of weighted random numbers
+
+    This is pure python, so it might be slower depending on the size attr.
+
+    params:
+        weights (list): Should be a list of weights.
+        start (int): The start of the range to include.
+        end (int): The end of the ranage to include.
+        **kwargs (dict): A dict of additional key value pairs that can be passed
+                         to `random_generator`.
+
+    returns:
+        (list): A list of random numbers based off the weights and matching
+                the size attr.
 
     '''
     results = []
