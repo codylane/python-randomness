@@ -75,4 +75,14 @@ def test_weighted_random_generator():
 
 
 def test_benchmark_of_weighted_random_generator():
-    assert False
+    import timeit
+
+    times = 10 ** 4
+
+    result = timeit.timeit(
+        setup='from randomness import weighted_random_generator',
+        stmt='weighted_random_generator(weights=[66, 12, 22], size=100, start=1, end=3)',  # noqa: E501
+        number=times,
+    )
+
+    print(f'result=times={times} result={result}')
