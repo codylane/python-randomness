@@ -40,7 +40,7 @@ generate random number generators for games or for science.
 
 ## The Challenge
 
-- The issue is this test provided the randomness for this result:
+- I want a random array for this randomness as follows given a size:
   - A is 65%
   - B is 12%
   - C is 22%
