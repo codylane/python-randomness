@@ -28,37 +28,63 @@ def random_generator(size, start=None, end=None, **kwargs):
     start = start or 1
     end = end or (size + 1)
 
-    return [
-        int(random.random() * end) + 1
-        for _ in range(0, size)
-    ]
+    for _ in range(0, size):
+        yield int(random.random() * end) + 1
 
 
-def weighted_random_generator(samples, size, start=None, end=None, **kwargs):
-    random_nums = random_generator(
-        size=size,
-        start=start,
-        end=end,
-        **kwargs,
-    )
+def weighted_random_generator(weights, size, start=None, end=None, **kwargs):  # noqa: E501
+    '''Do it
 
-    results = {
+    '''
+    results = []
+
+    start = start or 0
+    end = end or size
+
+    bean_counter = {
         i: 0
         for i in INDEX_MAP
     }
 
-    for random_num in random_nums:
-        results[random_num] += 1
+    while len(results) < size:
+        random_iterator = random_generator(
+                size=end,
+                start=start,
+                end=end,
+                **kwargs,
+        )
 
-    for index, value in results.items():
-        __import__('pdb').set_trace()
-        pass
+        rand_nums = [n for n in random_iterator]
+
+        for rand_num in rand_nums:
+            if bean_counter[rand_num] < weights[rand_num - 1]:
+                bean_counter[rand_num] += 1
+                if len(results) < size:
+                    results.append(rand_num)
+
+    return results
 
 
 if __name__ == '__main__':
-    weighted_random_generator(
-        samples=[1, 2, 3],
+    results = weighted_random_generator(
+        weights=[66, 12, 22],
         size=100,
         start=1,
         end=3,
     )
+
+    assert len(results) == 100
+
+    print(results)
+
+    data = {
+        i: 0
+        for i in INDEX_MAP
+    }
+
+    for result in results:
+        data[result] += 1
+
+    assert sum(data.values()) == 100
+
+    print(data)

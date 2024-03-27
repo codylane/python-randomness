@@ -33,5 +33,9 @@ init:
 	PROJNAME=$(PROJNAME) ./init.sh
 
 
+run:
+	python src/$(PROJNAME)/__init__.py
+
+
 test:
 	pytest -vs

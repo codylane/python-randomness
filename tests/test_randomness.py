@@ -9,11 +9,16 @@ def test_random_generator_generates_the_proper_size_of_items():
     start = 1
     end = 3
 
-    results = random_generator(
+    random_nums = random_generator(
         size=size,
         start=start,
         end=end,
     )
+
+    results = [
+        random_num
+        for random_num in random_nums
+    ]
 
     results_len = len(results)
 
@@ -42,17 +47,16 @@ def test_random_generator_generates_the_proper_size_of_items():
 
 
 def test_weighted_random_generator():
-    samples = [1, 2, 3]
-    size = 1000
-    start = 1
-    end = 3
-
-    results = weighted_random_generator(
-        samples=samples,
-        size=size,
-        start=start,
-        end=end,
+    kwargs = dict(
+        weights=[66, 12, 33],
+        size=100,
+        start=1,
+        end=3,
     )
 
-    print(results)
-    assert False
+    results = weighted_random_generator(**kwargs)
+
+    assert len(results) == kwargs['size']
+    print()
+    print(len(results))
+    print()
