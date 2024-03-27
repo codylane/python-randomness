@@ -48,7 +48,7 @@ def test_random_generator_generates_the_proper_size_of_items():
 
 def test_weighted_random_generator():
     kwargs = dict(
-        weights=[66, 12, 33],
+        weights=[66, 12, 22],
         size=100,
         start=1,
         end=3,
@@ -57,6 +57,22 @@ def test_weighted_random_generator():
     results = weighted_random_generator(**kwargs)
 
     assert len(results) == kwargs['size']
-    print()
-    print(len(results))
-    print()
+
+    actuals = {
+        i: 0
+        for i in range(kwargs['start'], kwargs['end'] + 1)
+    }
+
+    for actual in results:
+        actuals[actual] += 1
+
+    assert sum(actuals.values()) == kwargs['size']
+    assert len(actuals) == 3
+
+    assert actuals[1] == 66
+    assert actuals[2] == 12
+    assert actuals[3] == 22
+
+
+def test_benchmark_of_weighted_random_generator():
+    assert False
