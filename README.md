@@ -43,7 +43,7 @@ generate random number generators for games or for science.
 - The issue is this test provided the randomness for this result:
   - A is 65%
   - B is 12%
-  - C is 33%
+  - C is 22%
 
 - **Total Randomness %** = `(65 + 12 + 22)` = `100`
 
