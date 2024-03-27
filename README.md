@@ -45,11 +45,11 @@ generate random number generators for games or for science.
   - B is 12%
   - C is 33%
 
-- **Total Randomness %** = `(65 + 12 + 33)` = `110`
+- **Total Randomness %** = `(65 + 12 + 22)` = `100`
 
 - Random chance of A is 65%
 - Random chance of B is 12%
-- Random chance of B is 33%
+- Random chance of C is 22%
 
 ## The Goal
 
