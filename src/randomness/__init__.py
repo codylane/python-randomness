@@ -61,7 +61,7 @@ def weighted_random_generator(weights, size, start=None, end=None, **kwargs):  #
 
     while len(results) < size:
         random_iterator = random_generator(
-                size=end,
+                size=size,
                 start=start,
                 end=end,
                 **kwargs,
