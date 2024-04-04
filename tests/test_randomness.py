@@ -3,6 +3,8 @@
 from randomness import random_generator
 from randomness import weighted_random_generator
 
+import timeit
+
 
 def test_random_generator_generates_the_proper_size_of_items():
     size = 1000
@@ -75,8 +77,6 @@ def test_weighted_random_generator():
 
 
 def test_benchmark_of_weighted_random_generator():
-    import timeit
-
     times = 10 ** 4
 
     result = timeit.timeit(
