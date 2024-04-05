@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# coding: utf-8
+#!/usr/bin/env python # coding: utf-8
 #
 import random
 import timeit
@@ -8,22 +7,10 @@ import timeit
 DEFAULT_TEST_TIMES = 10 ** 5
 
 
-def generate_weighted_random_ints(weights, size):
+def generate_weights(weight_map):
     start_counter = 0
-    results = []
-
     last_index = 0
     array = []
-
-    weight_map = {
-        key: i + 1
-        for i, key in enumerate(weights)
-    }
-
-    index_map = {
-        v: 0
-        for _, v in weight_map.items()
-    }
 
     for weight in weights:
         for _ in range(start_counter, weight):
@@ -31,13 +18,26 @@ def generate_weighted_random_ints(weights, size):
         start_counter = 0
         last_index += weight
 
-    while len(results) < size:
-        random_index = int(random.random() * len(weights))
-        if index_map[random_index + 1] < weights[random_index]:
-            index_map[random_index + 1] += 1
-            results.append(array[random_index])
+    return array
 
-    __import__('pdb').set_trace()
+
+def generate_weighted_random_ints(weights, weight_map, size, sample_size):
+    results = []
+
+    index_map = {
+        v: 0
+        for _, v in weight_map.items()
+    }
+
+    while len(results) < size:
+        random_index = int(random.random() * size)
+
+        __import__('pdb').set_trace()
+        if index_map[random_index] < weights[random_index - 1]:
+            index_map[random_index] += 1
+            results.append(random_index - 1)
+
+        print(random_index, len(results))
 
     return results
 
@@ -47,21 +47,34 @@ def calculate_results(results):
     twos = [_ for _ in results if _ == 2]
     threes = [_ for _ in results if _ == 3]
 
-    print(len(ones) + len(twos) + len(threes))
-    print(len(ones), len(twos), len(threes))
-    print(results)
+    data = {
+        'results': {
+            ':size': len(ones) + len(twos) + len(threes),
+        },
+        'totals': {
+            'ones': len(ones),
+            'twos': len(twos),
+            'threes': len(threes),
+        }
+    }
 
-    return ones, twos, threes
+    return data
 
 
 def do_benchmark_mr_music(times=None):
     times = times or DEFAULT_TEST_TIMES
 
+    stmt = '''
+        generate_weighted_random_ints(weights=[66, 12, 22], size=100)'
+    '''
+
     result = timeit.timeit(
         setup='from __main__ import generate_weighted_random_ints',
-        stmt='generate_weighted_random_ints(weights=[66, 12, 22], size=100)',  # noqa: E501
+        stmt=stmt,
         number=times,
     )
+
+    print_benchmark_result(times=times, result=result)
 
     return result
 
@@ -75,15 +88,34 @@ def do_benchmark_mr_shlep(times=None):
         number=times,
     )
 
+    print_benchmark_result(times=times, result=result)
+
     return result
+
+
+def print_benchmark_result(times, result):
+    return f'=Ran algorithm {times} and it took {result} seconds'
 
 
 if __name__ == '__main__':
     weights = [66, 12, 22]
     size = 100
 
-    results = generate_weighted_random_ints(weights=weights, size=size)
+    weight_map = {
+        key: i + 1
+        for i, key in enumerate(weights)
+    }
+
+    weights = [_ for _ in generate_weights(weight_map=weight_map)]
+
+    results = generate_weighted_random_ints(
+        sample_size=3,
+        size=size,
+        weight_map=weight_map,
+        weights=weights,
+    )
+
     calculate_results(results)
 
-    print(do_benchmark_mr_music(times=DEFAULT_TEST_TIMES))
-    print(do_benchmark_mr_shlep(times=DEFAULT_TEST_TIMES))
+    do_benchmark_mr_music(times=DEFAULT_TEST_TIMES)
+    do_benchmark_mr_shlep(times=DEFAULT_TEST_TIMES)
