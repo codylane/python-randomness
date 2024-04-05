@@ -60,16 +60,14 @@ def weighted_random_generator(weights, size, start=None, end=None, **kwargs):  #
     }
 
     while len(results) < size:
-        random_iterator = random_generator(
-                size=int(size / 2),
+        random_nums = random_generator(
+                size=int(size / 3),
                 start=start,
                 end=end,
                 **kwargs,
         )
 
-        # rand_nums = [n for n in random_iterator]
-
-        for rand_num in random_iterator:
+        for rand_num in random_nums:
             if bean_counter[rand_num] < weights[rand_num - 1]:
                 bean_counter[rand_num] += 1
                 if len(results) < size:

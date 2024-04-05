@@ -5,6 +5,9 @@ import random
 import timeit
 
 
+DEFAULT_TEST_TIMES = 10 ** 5
+
+
 def generate_weighted_random_ints(weights, size):
     start_counter = 0
     results = []
@@ -17,16 +20,24 @@ def generate_weighted_random_ints(weights, size):
         for i, key in enumerate(weights)
     }
 
+    index_map = {
+        v: 0
+        for _, v in weight_map.items()
+    }
+
     for weight in weights:
-        for i in range(start_counter, weight):
-            i += last_index
+        for _ in range(start_counter, weight):
             array.append(weight_map[weight])
         start_counter = 0
         last_index += weight
 
     while len(results) < size:
-        random_index = int(random.random() * sum(weights))
-        results.append(array[random_index])
+        random_index = int(random.random() * len(weights))
+        if index_map[random_index + 1] < weights[random_index]:
+            index_map[random_index + 1] += 1
+            results.append(array[random_index])
+
+    __import__('pdb').set_trace()
 
     return results
 
@@ -44,7 +55,7 @@ def calculate_results(results):
 
 
 def do_benchmark_mr_music(times=None):
-    times = times or 10 ** 5
+    times = times or DEFAULT_TEST_TIMES
 
     result = timeit.timeit(
         setup='from __main__ import generate_weighted_random_ints',
@@ -56,7 +67,7 @@ def do_benchmark_mr_music(times=None):
 
 
 def do_benchmark_mr_shlep(times=None):
-    times = times or 10 ** 5
+    times = times or DEFAULT_TEST_TIMES
 
     result = timeit.timeit(
         setup='from randomness import weighted_random_generator',
@@ -74,5 +85,5 @@ if __name__ == '__main__':
     results = generate_weighted_random_ints(weights=weights, size=size)
     calculate_results(results)
 
-    print(do_benchmark_mr_music(times=10 ** 4))
-    print(do_benchmark_mr_shlep(times=10 ** 4))
+    print(do_benchmark_mr_music(times=DEFAULT_TEST_TIMES))
+    print(do_benchmark_mr_shlep(times=DEFAULT_TEST_TIMES))
