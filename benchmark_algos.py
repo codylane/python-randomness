@@ -1,5 +1,7 @@
-#!/usr/bin/env python # coding: utf-8
-#
+#!/usr/bin/env python
+# coding: utf-8 #
+
+
 import random
 import timeit
 
@@ -21,7 +23,7 @@ def generate_weights(weight_map):
     return array
 
 
-def generate_weighted_random_ints(weights, weight_map, size, sample_size):
+def generate_weighted_random_ints(weights, weight_map, size):
     results = []
 
     index_map = {
@@ -31,14 +33,15 @@ def generate_weighted_random_ints(weights, weight_map, size, sample_size):
 
     while len(results) < size:
         random_index = int(random.random() * size)
+        random_result = weights[random_index]
 
         __import__('pdb').set_trace()
-        if index_map[random_index] < weights[random_index - 1]:
-            index_map[random_index] += 1
-            results.append(random_index - 1)
+        if index_map[random_result] < weight_map.keys()[random_result - 1]:
+            index_map[random_result] += 1
+            __import__('pdb').set_trace()
+            results.append(random_result)
 
-        print(random_index, len(results))
-
+        print(len(results))
     return results
 
 
@@ -102,14 +105,14 @@ if __name__ == '__main__':
     size = 100
 
     weight_map = {
-        key: i + 1
-        for i, key in enumerate(weights)
+        i + 1: value
+        for i, value in enumerate(weights)
     }
+    __import__('pdb').set_trace()
 
     weights = [_ for _ in generate_weights(weight_map=weight_map)]
 
     results = generate_weighted_random_ints(
-        sample_size=3,
         size=size,
         weight_map=weight_map,
         weights=weights,
