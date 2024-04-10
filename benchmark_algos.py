@@ -2,6 +2,7 @@
 # coding: utf-8 #
 
 
+from inspect import cleandoc
 import random
 import timeit
 
@@ -41,7 +42,6 @@ def generate_weighted_random_ints(weights, weight_map):
             index_map[random_value] += 1
             results.append(random_value)
 
-        print(len(results))
     return results
 
 
@@ -67,13 +67,33 @@ def calculate_results(results):
 def do_benchmark_mr_music(times=None):
     times = times or DEFAULT_TEST_TIMES
 
-    stmt = '''
-        generate_weighted_random_ints(weights=[66, 12, 22])
-    '''
+    setup = cleandoc(
+        '''
+        from __main__ import generate_weighted_random_ints
+        from __main__ import generate_weights
+
+        weights = [66, 12, 22]
+
+        weight_map = {
+            weight: i + 1
+            for i, weight in enumerate(weights)
+        }
+
+        generated_weights = [
+            _
+            for _ in generate_weights(weights=weights, weight_map=weight_map)
+        ]
+
+        weight_map = {
+            i + 1: weight
+            for i, weight in enumerate(weights)
+        }
+        '''  # noqa: E501
+    )
 
     result = timeit.timeit(
-        setup='from __main__ import generate_weighted_random_ints',
-        stmt=stmt,
+        setup=setup,
+        stmt='generate_weighted_random_ints(weights=generated_weights, weight_map=weight_map)',  # noqa: E501
         number=times,
     )
 
@@ -123,7 +143,7 @@ if __name__ == '__main__':
         weights=generated_weights,
     )
 
-    calculate_results(results)
+    print(calculate_results(results))
 
-    # do_benchmark_mr_music(times=DEFAULT_TEST_TIMES)
-    # do_benchmark_mr_shlep(times=DEFAULT_TEST_TIMES)
+    print(do_benchmark_mr_music(times=DEFAULT_TEST_TIMES))
+    print(do_benchmark_mr_shlep(times=DEFAULT_TEST_TIMES))
