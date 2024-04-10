@@ -29,7 +29,7 @@ def weighted_random_generator(weights, size, start=None, end=None, **kwargs):  #
     }
 
     while len(results) < size:
-        rand_num = int(random.random() * end) + 1
+        rand_num = int(random.random() * end) + 1  # nosec
 
         if bean_counter[rand_num] < weights[rand_num - 1]:
             bean_counter[rand_num] += 1
