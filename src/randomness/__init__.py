@@ -28,8 +28,12 @@ def random_generator(size, start=None, end=None, **kwargs):
     start = start or 1
     end = end or (size + 1)
 
-    for _ in range(0, size):
-        yield int(random.random() * end) + 1  # nosec
+    results = [
+        int(random.random() * end) + 1
+        for _ in range(0, size)
+    ]
+
+    return results
 
 
 def weighted_random_generator(weights, size, start=None, end=None, **kwargs):  # noqa: E501
@@ -60,17 +64,10 @@ def weighted_random_generator(weights, size, start=None, end=None, **kwargs):  #
     }
 
     while len(results) < size:
-        random_nums = random_generator(
-                size=int(size / 3),
-                start=start,
-                end=end,
-                **kwargs,
-        )
+        rand_num = int(random.random() * end) + 1
 
-        for rand_num in random_nums:
-            if bean_counter[rand_num] < weights[rand_num - 1]:
-                bean_counter[rand_num] += 1
-                if len(results) < size:
-                    results.append(rand_num)
+        if bean_counter[rand_num] < weights[rand_num - 1]:
+            bean_counter[rand_num] += 1
+            results.append(rand_num)
 
     return results

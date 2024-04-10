@@ -120,7 +120,7 @@ def print_benchmark_result(times, result):
     return f'=Ran algorithm {times} and it took {result} seconds'
 
 
-if __name__ == '__main__':
+def setup_mr_music():
     weights = [66, 12, 22]
 
     weight_map = {
@@ -143,7 +143,10 @@ if __name__ == '__main__':
         weights=generated_weights,
     )
 
-    print(calculate_results(results))
+    print(f'results={results}')
+    print(f'data={calculate_results(results)}')
 
-    print(do_benchmark_mr_music(times=DEFAULT_TEST_TIMES))
+
+if __name__ == '__main__':
+    # print(do_benchmark_mr_music(times=DEFAULT_TEST_TIMES))
     print(do_benchmark_mr_shlep(times=DEFAULT_TEST_TIMES))
