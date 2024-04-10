@@ -33,15 +33,12 @@ def generate_weighted_random_ints(weights, weight_map):
         for i in range(0, len(weight_map.values()))
     }
 
-    __import__('pdb').set_trace()
-
     while len(results) < size:
         random_index = int(random.random() * size)
         random_value = weights[random_index]
 
-        if index_map[random_value] < weight_map.keys()[random_value - 1]:
+        if index_map[random_value] < weight_map[random_value]:
             index_map[random_value] += 1
-            __import__('pdb').set_trace()
             results.append(random_value)
 
         print(len(results))
@@ -128,5 +125,5 @@ if __name__ == '__main__':
 
     calculate_results(results)
 
-    do_benchmark_mr_music(times=DEFAULT_TEST_TIMES)
-    do_benchmark_mr_shlep(times=DEFAULT_TEST_TIMES)
+    # do_benchmark_mr_music(times=DEFAULT_TEST_TIMES)
+    # do_benchmark_mr_shlep(times=DEFAULT_TEST_TIMES)
