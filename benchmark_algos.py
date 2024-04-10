@@ -148,5 +148,5 @@ def setup_mr_music():
 
 
 if __name__ == '__main__':
-    # print(do_benchmark_mr_music(times=DEFAULT_TEST_TIMES))
+    print(do_benchmark_mr_music(times=DEFAULT_TEST_TIMES))
     print(do_benchmark_mr_shlep(times=DEFAULT_TEST_TIMES))
